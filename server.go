@@ -2,7 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"github.com/jasba24/JSONConverter"
+	// "io/ioutil"
 	"net/http"
 )
 
@@ -14,11 +15,7 @@ type Course struct {
 type Courses  []Course
 
 func main() {
-	file_data, _ := ioutil.ReadFile("./db.json")
-
-	c := Courses{}
-
-	json.Unmarshal(file_data, &c)
+	c := JSONConverter.Converter(Courses{}, "db.json")
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(c)
